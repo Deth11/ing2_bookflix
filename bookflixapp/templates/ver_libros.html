@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table  class="table">
+
+	<tr>
+		<td>TITULO</td>
+		<td>PAGINAS</td>
+		<td>CAPITULOS</td>
+		<td>ISBN</td>
+		<td>AÑO EDICION</td>
+		<td>AUTOR</td>
+		<td>EDITORIAL</td>
+	</tr>
+
+	{% for libro in libros %}
+
+	<tr>
+		<td><a href="/verCapitulos/{{libro.id}}">{{libro.titulo}}</a></td>
+		<td>{{libro.nropaginas}}</td>
+		<td>{{libro.nrocapitulos}}</td>
+		<td>h{{libro.isbn}}</td>
+		<td>{{libro.agnoedicion}}</td>
+		<td>{{libro.autor}}</td>
+		<td>{{libro.editorial}}</td>
+	</tr>
+
+	{% endfor %}
+
+</table>
+
+{% endblock %}
