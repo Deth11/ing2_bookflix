@@ -77,8 +77,7 @@ def register(request):
 
             # Creamos la nueva cuenta de usuario
             username = form.cleaned_data["email"]
-            password1 = form.cleaned_data["password1"]
-            realpassword = hashers.make_password(password=password1)
+            realpassword = hashers.make_password(password=form.cleaned_data["password1"])
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
             tarjeta = form.cleaned_data["tarjeta"]
@@ -159,9 +158,32 @@ def createprofile(request):
 
 
 def verperfil(request):
-    user = request.user
-    usuario = Usuario.objects.get(user=user)
-    perfil = Perfil.objects.filter(usuario=usuario)
-    return render(request, 'perfil.html', {"perfil": perfil[0]})
+    if request.method == "GET":
+        user = request.user
+        usuario = Usuario.objects.filter(user=user)
+        perfil = Perfil.objects.filter(usuario=usuario[0], selected=True)
+        return render(request, 'perfil.html', {"perfil": perfil[0]})
+    else:
+        if request.method == "POST":
+            name = request.POST["nombre"]
+            user = request.user
+            usuario = Usuario.objects.get(user=user)
+            perfil_sel = Perfil.objects.filter(selected=True, usuario=usuario)
+            perfil = Perfil.objects.filter(username=name, usuario=usuario)
+            p = perfil_sel[0]
+            p.selected = False
+            p.save()
+            p2 = perfil[0]
+            p2.selected = True
+            p2.save()
+            return render(request, 'perfil.html', {"perfil": perfil[0]})
 
 
+def selecperfil(request):
+    if request.method == "GET":
+        user = request.user
+        usuario = Usuario.objects.filter(user=user)
+        perfiles = Perfil.objects.filter(usuario=usuario[0])
+        return render(request, 'selec_perfil.html', {"perfiles": perfiles})
+    if request.method == "POST":
+        return render(request, 'perfil.html')
