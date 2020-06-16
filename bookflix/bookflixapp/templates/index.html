@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+<header>
+
+    <link rel="stylesheet" type="text/css" href='{% static "css/estilo.css" %}'/>
+
+{% if user.is_authenticated %}
+	<nav> <!-- menu de navegacion -->
+		<ul>
+			<li><a href="/verLibros">Ver Libros</a></li>
+			<li><a href="/selecPerfil">Seleccionar Perfil</a></li>
+			<li><a href="/perfil">Ver Perfil</a></li>
+			<li><a href="/crearPerfil">Crear Perfil</a></li>
+			<li><a href="/logout">Cerrar sesión</a></li>
+		</ul>
+	</nav>
+{% else %}
+	<nav> <!-- menu de navegacion -->
+		<ul>
+			<li><a href="/login">Iniciar sesión</a></li>
+			<li><a href="/register">Registrarse</a></li>
+		</ul>
+	</nav>
+
+{% endif %}
+
+</header>
+
+
+
+
+
+<h3>Novedades</h3>
+<div  class='novedades' align="center">
+		
+	{% if novedades.exists %}
+
+
+		{% for novedad in novedades %}
+				 {{novedad.creacion}}  </br>
+				<h4> {{novedad.titulo}} </h4>
+				{{novedad.texto|linebreaks}} </br></br>
+				<hr>
+				
+	
+		{% endfor %}
+
+	{% else %}
+
+		<small class="text-muted">No hay novedades</small>
+	
+	{% endif %}
+
+</div>
+
+
+{% if user.is_authenticated %}
+	<h2>Área para miembros</h2>
+
+	<p>
+		Bienvenido <b>{{request.user.first_name}}</b>,
+		esta página es exclusiva para usuarios registrados.
+	</p>
+{% endif %}
+
+
+
+{% endblock %}
+
