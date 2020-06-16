@@ -6,7 +6,7 @@ from django.http import request as rq
 
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import hashers
 from django.contrib.auth import login as do_login
@@ -161,9 +161,13 @@ def createprofile(request):
 def verperfil(request):
     if request.method == "GET":
         user = request.user
-        usuario = Usuario.objects.filter(user=user)
-        perfil = Perfil.objects.filter(usuario=usuario[0], selected=True)
-        return render(request, 'perfil.html', {"perfil": perfil[0]})
+        anon = User(AnonymousUser)
+        if user.username != "":
+            usuario = Usuario.objects.filter(user=user)
+            perfil = Perfil.objects.filter(usuario=usuario[0], selected=True)
+            return render(request, 'perfil.html', {"perfil": perfil[0]})
+        else:
+            return render(request, 'perfil.html')
     else:
         if request.method == "POST":
             name = request.POST["nombre"]

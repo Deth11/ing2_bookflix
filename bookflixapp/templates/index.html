@@ -77,34 +77,25 @@
 
 
 
-<h3>Novedades</h3>
+<h3 align="center">Novedades</h3>
 <div  class='novedades' align="center">
-		
 	{% if novedades.exists %}
-
-
 		{% for novedad in novedades %}
 				 {{novedad.creacion}}  </br>
-				<h4> {{novedad.titulo}} </h4>
+				<h4 align="center"> {{novedad.titulo}} </h4>
 				{{novedad.texto|linebreaks}} </br></br>
 				<hr>
-				
-	
 		{% endfor %}
-
 	{% else %}
-
 		<small class="text-muted">No hay novedades</small>
-	
 	{% endif %}
-
 </div>
 
 
 {% if user.is_authenticated %}
-	<h2>Área para miembros</h2>
+	<h2 align="center">Área para miembros</h2>
 
-	<p>
+	<p align="center">
 		Bienvenido <b>{{request.user.first_name}}</b>,
 		esta página es exclusiva para usuarios registrados.
 	</p>
