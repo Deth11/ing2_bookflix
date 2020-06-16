@@ -1,7 +1,7 @@
 {% if user.is_authenticated %}
-    {% include 'base_login.html' %}
-{% else %}
     {% include 'base.html' %}
+{% else %}
+    {% include 'base_login.html' %}
 {% endif %}
 
 {% load static %}
