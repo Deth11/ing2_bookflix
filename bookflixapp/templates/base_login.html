@@ -1,21 +1,27 @@
-{% if user.is_authenticated %}
-    {% include 'base_login.html' %}
-{% else %}
-    {% include 'base.html' %}
-{% endif %}
-
+<!doctype html>
 {% load static %}
+<!-- cargo archivos estaticos (.css, imagenes, etc.)-->
 
-{% block content %}
+<html>
+<head>
 
 
+<!-- aca cargamos jquery y bootstrap para que la pagina sea responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href='{% static "images/logo.png" %}'/>
 
+    <meta charset="utf-8">
 
-<!--<header>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href='{% static "css/estilo.css" %}'/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
 
-{% if user.is_authenticated %}
+<body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,66 +57,10 @@
     </form>
   </div>
 </nav>
-		<nav>  menu de navegacion
-		<ul class="list-group list-group-horizontal">
-			<li class="list-group-item"><a href="/verLibros">Ver Libros</a></li>
-			<li class="list-group-item"><a href="/selecPerfil">Seleccionar Perfil</a></li>
-			<li class="list-group-item"><a href="/perfil">Ver Perfil</a></li>
-			<li class="list-group-item"><a href="/crearPerfil">Crear Perfil</a></li>
-			<li class="list-group-item"><a href="/logout">Cerrar sesión</a></li>
-		</ul>
-	</nav>
-{% else %}
-	<nav>  menu de navegacion
-		<ul>
-			<li><a href="/login">Iniciar sesión</a></li>
-			<li><a href="/register">Registrarse</a></li>
-		</ul>
-	</nav>
+<div class="container">
+            {% block content %}
 
-{% endif %}
-
-</header>
--->
-
-
-
-
-
-<h3>Novedades</h3>
-<div  class='novedades' align="center">
-		
-	{% if novedades.exists %}
-
-
-		{% for novedad in novedades %}
-				 {{novedad.creacion}}  </br>
-				<h4> {{novedad.titulo}} </h4>
-				{{novedad.texto|linebreaks}} </br></br>
-				<hr>
-				
-	
-		{% endfor %}
-
-	{% else %}
-
-		<small class="text-muted">No hay novedades</small>
-	
-	{% endif %}
-
+            {% endblock %}
 </div>
-
-
-{% if user.is_authenticated %}
-	<h2>Área para miembros</h2>
-
-	<p>
-		Bienvenido <b>{{request.user.first_name}}</b>,
-		esta página es exclusiva para usuarios registrados.
-	</p>
-{% endif %}
-
-
-
-{% endblock %}
-
+</body>
+</html>
