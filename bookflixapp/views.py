@@ -11,6 +11,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import hashers
 from django.contrib.auth import login as do_login
 from .forms import RegistrationForm, CreateProfileForm
+from .filters import LibroFilter
 
 # from .forms import FormularioAgregarLibro
 
@@ -41,8 +42,8 @@ def agregar_libro(request):
 
 
 def ver_libros(request):
-    libros = Libro.objects.all()
-    return render(request, "ver_libros.html", {"libros": libros})
+    filtro = LibroFilter(request.GET, queryset=Libro.objects.all())
+    return render(request, "ver_libros.html", {"filter": filtro})
 
 
 def ver_capitulos(request, pk):
@@ -128,7 +129,7 @@ def login(request):
                 return redirect('/')
             #return render(request, "index.html")
         else:
-            return redirect('/')
+            return redirect('/register')
         #else:
             #return redirect('/register')
     # Si llegamos al final renderizamos el formulario
@@ -139,7 +140,7 @@ def logout(request):
     # Finalizamos la sesión
     do_logout(request)
     # Redireccionamos a la portada
-    return redirect('/login/')
+    return redirect('/')
 
 
 def createprofile(request):
